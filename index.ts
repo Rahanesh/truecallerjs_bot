@@ -107,7 +107,8 @@ Deno.serve(
       if (kvValue.status === "logged_out") reportEvent("/start");
 
       return sendTgMessage(
-        "You need to /login to Truecaller with your existing account to use the bot.\nOnly you will be using your own account to search the numbers.",
+        "▪️کاربر گرامی ضمن عرض سلام و خوش آمد🪴 به ربات شماره یاب☎️ رسانه رهانش، لطفا برای استفاده از ربات، لازم است وارد حساب کاربری موجود  وارد Truecaller شوید.\n
+شما از طریق حساب کاربری خود برای جستجوی شماره افراد استفاده خواهید کرد \nبرای ورود دستور /login را ارسال کنید",
       );
     }
 
@@ -122,14 +123,16 @@ Deno.serve(
         status = "Logged out";
       }
 
-      status = `*Status:* ${status}`;
+      status = `*وضعیت ورود به سیستم:* ${status}`;
 
       installationId = installationId
         ? `\n[Installation ID:](https://github.com/sumithemmadi/truecallerjs#simple-example) \`${installationId}\``
         : "";
 
       const about =
-        "[Source Code](https://github.com/ni554n/truecallerjs_bot) *\\|* [anissan\\.com](https://anissan.com)";
+        "[🍏 @Sib8bot](https://t.me/Sib8bot) *\\|* [🎓 Rahanesh\\Media](https://t.me/Rahanesh)\n
+🎓رسانه آموزشی رهانش ارائه دهنده خدمات طراحی سایت و ربات\n
+☎️ @FinderMobBot";
 
       return sendTgMessage(`${status}${installationId}\n\n${about}`, true);
     }
@@ -148,7 +151,7 @@ Deno.serve(
       } satisfies KvValue);
 
       return sendTgMessage(
-        "_installation\\_id_ is the final auth token generated after a successful truecaller login\\.\n\nIf you know how to retrieve it from an already logged in device, you can directly set it here without going through the login process again\\.\n\nEnter the installation ID:",
+        "_installation\\_id_ آخرین نشانه تاییدیه است که پس از ورود موفق به truecaller برای حساب کاربری شما ایجاد می شود.\\.\n\nاگر می‌دانید چگونه کد آن را از دستگاهی که قبلاً با آن وارد حساب کاربری خود در سایت یا برنامه موبایلی truecaller شده‌اید بازیابی کنید، می‌توانید مستقیماً آن را بدون انجام مجدد فرآیند ورود در اینجا تنظیم کنید.\\.\n\nشناسه installation ID را وارد کنید:",
         true,
       );
     }
@@ -167,7 +170,7 @@ Deno.serve(
       reportEvent("/installation_id");
 
       return sendTgMessage(
-        "Enter your phone number's 2\\-letter [ISO country code](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes):",
+        "شماره تلفن خود را وارد کنید 2\\-letter [ISO country code](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes):",
         true,
       );
     }
@@ -185,7 +188,7 @@ Deno.serve(
       } satisfies KvValue);
 
       return sendTgMessage(
-        "Successfully logged in to Truecaller.\nYou can now search any number.",
+        "✅با موفقیت به Truecaller وارد شدید.\n ▪️اکنون می توانید هر شماره ای را جستجو کنید🔍",
       );
     }
 
@@ -196,7 +199,7 @@ Deno.serve(
 
       reportEvent("/logout");
 
-      return sendTgMessage("You've been logged out");
+      return sendTgMessage("شما از سیستم خارج شده اید");
     }
 
     //#region Command: /login
@@ -213,7 +216,8 @@ Deno.serve(
       } satisfies KvValue);
 
       return sendTgMessage(
-        "Enter your Truecaller account phone no. in international (+19...) format:",
+        "لطفا شماره موبایل حساب کاربری خود در سایت Truecaller را وارد کنید. در قالب بین المللی (+989123456789)\n 
+چنانچه پیامک حاوی کد ورود را از سامانه دریافت نکردید حتما vpn خود را روشن کنید سپس مجددا درخواست /login را ارسال کنید",
       );
     }
 
@@ -225,7 +229,7 @@ Deno.serve(
 
       if (!phoneNumber?.startsWith("+")) {
         return sendTgMessage(
-          "Phone number should be in international format like +91...",
+          "شماره تلفن باید در قالب بین المللی مانند باشد\n ▪️ +989190045678",
         );
       }
 
@@ -233,7 +237,7 @@ Deno.serve(
 
       if (responseBody.status === 6 || responseBody.status === 5) {
         return sendTgMessage(
-          "You have exceeded the limit of verification attempts.\nPlease try again after some time (up to 24h).",
+          "▪️شما از حد مجاز تلاش برای تأیید ورود فراتر رفته اید⛔️ \nلطفاً بعد از مدتی (تا 24 ساعت) دوباره امتحان کنید🙏",
         );
       }
 
@@ -253,7 +257,7 @@ Deno.serve(
         loginResponse: responseBody,
       } satisfies KvValue);
 
-      return sendTgMessage("Enter the OTP from SMS or WhatsApp:");
+      return sendTgMessage("کد دریافتیOTP از طریق پیامک یا واتساپ را وارد کنید. چنانچه کدی دریافت نکردید یکبار VPN خود را روشن کنید ");
     }
 
     if (kvValue.status === "awaiting_otp" && !message.text.startsWith("/")) {
@@ -267,7 +271,7 @@ Deno.serve(
 
       if (otpResponse.suspended) {
         return sendTgMessage(
-          "Your account has been suspended by Truecaller.\nTry to /login with another number.",
+          "🚫متاسفانه حساب شما توسط Truecaller به حالت تعلیق درآمده است.\nسعی کنید با شماره دیگری /login شوید.",
         );
       }
 
@@ -276,12 +280,12 @@ Deno.serve(
       }
 
       if (otpResponse.status === 7) {
-        return sendTgMessage("Retries limit exceeded");
+        return sendTgMessage("تعداد تلاش‌ها به حداکثر مجاز رسیده است.");
       }
 
       if (!otpResponse.installationId) {
         return sendTgMessage(
-          (otpResponse.message as string) || "Unknown error. Try again.",
+          (otpResponse.message as string) || "خطای نا مشخص لطفا مجدد تلاش کنید⏳",
         );
       }
 
@@ -294,14 +298,14 @@ Deno.serve(
       reportEvent("/login");
 
       return sendTgMessage(
-        "Successfully logged in to Truecaller.\nYou can now search any number.",
+        "✅با موفقیت وارد Truecaller شدید.\n▪️اکنون می‌توانید هر شماره‌ای را جستجو کنید🔍",
       );
     }
 
     //#endregion /login
 
     if (kvValue.status !== "logged_in") {
-      return sendTgMessage("Please /login first before searching for a number");
+      return sendTgMessage("🔕لطفاً قبل از جستجوی شماره ابتدا /login کنید");
     }
 
     const searchData = {
@@ -322,7 +326,7 @@ Deno.serve(
 
       if (status === 40101 || status === 42601) {
         return sendTgMessage(
-          `Truecaller responded with an account error: \`${apiMessage}\`\\.\n\nMake sure your account is still valid by login into the official app\\.\n\nTry to /login here again after checking\\.`,
+          `Truecaller با خطای حساب کاربری پاسخ داد: `${apiMessage}`\.\n\nاطمینان حاصل کنید که حساب کاربری شما هنوز اعتبار دارد و با ورود به برنامه رسمی اطمینان حاصل کنید\.\n\nپس از بررسی، می‌توانید دوباره در اینجا /login کرده و تلاش کنید\.`,
           true,
         );
       }
