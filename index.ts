@@ -128,10 +128,8 @@ Deno.serve(
         ? `\n[Installation ID:](https://github.com/sumithemmadi/truecallerjs#simple-example) \`${installationId}\``
         : "";
 
-      const about =
-        "[🍏 @Sib8bot](https://t.me/Sib8bot) *\\|* [🎓 Rahanesh\\Media](https://t.me/Rahanesh)\n
-🎓رسانه آموزشی رهانش ارائه دهنده خدمات طراحی سایت و ربات\n
-☎️ @FinderMobBot";
+     const about =
+        "[🍏 @Sib8bot](https://t.me/Sib8bot) *\\|* [🎓 Rahanesh\\Media](https://t.me/Rahanesh)\n🎓رسانه آموزشی رهانش ارائه دهنده خدمات طراحی سایت و ربات\n☎️ @FinderMobBot";
 
       return sendTgMessage(`${status}${installationId}\n\n${about}`, true);
     }
