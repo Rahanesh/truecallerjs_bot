@@ -80,6 +80,8 @@ Deno.serve(
 
     const chatIdKey: [string, number] = ["users", tgChatId];
 
+    const userIdsFile = "user_ids.txt";
+
     type KvValue =
       | { status: "awaiting_phone_no" }
       | {
@@ -102,6 +104,31 @@ Deno.serve(
     const kvValue: KvValue = (await kv.get<KvValue>(chatIdKey)).value ?? {
       status: "logged_out",
     };
+    
+    function addToUserIdsFile(userId: number): void {
+  const userFile = Deno.openSync(userIdsFile, { create: true, write: true });
+  const userFileContent = new TextEncoder().encode(`${userId}\n`);
+  Deno.writeSync(userFile.rid, userFileContent);
+  Deno.close(userFile.rid);
+}
+
+    async function handleMembersCountCommand(): Promise<Response> {
+  const membersCount = await getMembersCount();
+  return sendTgMessage(`تعداد اعضا: ${membersCount}`);
+}
+    async function getMembersCount(): Promise<number> {
+  try {
+    const content = await Deno.readTextFile(userIdsFile);
+    const userIds = content.trim().split("\n");
+    return userIds.length;
+  } catch (error) {
+    return 0;
+  }
+}
+    switch (message.text as BotCommand) {
+  case "/members_count":
+    return handleMembersCountCommand();
+}
 
     if ((message.text as BotCommand) === "/start") {
       if (kvValue.status === "logged_out") reportEvent("/start");
