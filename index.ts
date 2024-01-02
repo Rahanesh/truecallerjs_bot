@@ -322,7 +322,7 @@ Deno.serve(
 
       if (status === 40101 || status === 42601) {
         return sendTgMessage(
-          `Truecaller با خطای حساب کاربری پاسخ داد: `${apiMessage}`\.\n\nاطمینان حاصل کنید که حساب کاربری شما هنوز اعتبار دارد و با ورود به برنامه رسمی اطمینان حاصل کنید\.\n\nپس از بررسی، می‌توانید دوباره در اینجا /login کرده و تلاش کنید\.`,
+          `Truecaller responded with an account error: \`${apiMessage}\`\\.\n\nMake sure your account is still valid by login into the official app\\.\n\nTry to /login here again after checking\\.`,
           true,
         );
       }
